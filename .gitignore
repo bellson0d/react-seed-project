@@ -1,0 +1,9 @@
+node_modules
+dist
+
+#IDE rc files
+.idea
+.vscode
+
+#MacOS
+.DS_Store
