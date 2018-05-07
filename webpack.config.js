@@ -5,14 +5,24 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 const extractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-  entry: './index.js',
+  entry: path.resolve('./src/index.jsx'),
   output: {
     path: path.join(__dirname, './dist'),
     filename: 'webpack-bundle-dist.js'
   },
   module: {
     rules: [
-      { test: /\.css$/, use: 'css-loader'}
+      { test: /\.css$/, use: 'css-loader' },
+      {
+        test: /\.(js|jsx)$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: ['react-hot-loader/babel'],
+          }
+        },
+        exclude: /node_modules/
+      },
     ]
   },
   mode: 'production',
@@ -22,8 +32,7 @@ module.exports = {
   plugins: [
     new openBrowserWebpackPlugin({ url: 'http://localhost:8888' }),
     new htmlWebpackPlugin({
-      template: './index.html',
-      // filename: './index.html'
+      template: './src/index.html',
     })
     // new extractTextPlugin('bundle.[hash:4].css')
   ]
